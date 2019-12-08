@@ -46,29 +46,30 @@ def getDays(tid):
 
 @app.route('/api/trip/<int:tid>/day/', methods=['POST'])
 def createDay(tid):
+    if not Trip.query.filter_by(id=tid).first():
+        return json.dumps({'success': False, 'data': 'No such trip exists'}), 404
+
     post_body = json.loads(request.data)
     date = post_body['date']
     location = post_body['location']
     trip_id = post_body['trip_id']
-    
-    if not Trip.query.filter_by(id=tid).first():
-        return json.dumps({'success': False, 'data': 'No such trip exists'}), 404
 
     day = Day(
         date=date,
         location=location,
         trip_id=trip_id
     )
+
     db.session.add(day)
     db.session.commit()
     return json.dumps({'success': True, 'data': day.serialize()})
 
 @app.route('/api/day/<int:did>/', methods=['DELETE'])
 def deleteDay(did):
-    day = Day.query.filter_by(id=did).first()
-
     if not day:
         return json.dumps({'success': False, 'data': 'No such day exists'}), 404
+
+    day = Day.query.filter_by(id=did).first()
 
     db.session.delete(day)
     db.session.commit()
@@ -97,7 +98,6 @@ def addEvent(did):
 
     db.session.add(event)
     db.session.commit()
-
     return json.dumps({'success': True, 'data': event.serialize()})
 
 @app.route('/api/event/<int:eid>/', methods=['POST'])
@@ -109,7 +109,6 @@ def deleteEvent(eid):
 
     db.session.delete(event)
     db.session.commit()
-
     return json.dumps({'success': True, 'data': event.serialize()})
 
 
