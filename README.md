@@ -7,5 +7,5 @@ Description: This app is the backend of an itinarary planning app that allows us
 Requirements:
     Design an API with different routes: The project is indeed an API with various GET, POST, and DELETE routes
     Database modelling: Databases are modelled in SQLAlchemy
-    Deploy to Google Cloud: The app is deployed to Google cloud
+    Deploy to Google Cloud: The app is deployed to Google cloud, link is http://35.237.243.38/
 Anything else: The app is quite simple, but I had fun making it and really enjoyed the course.
